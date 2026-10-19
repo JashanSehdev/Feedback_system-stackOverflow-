@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { TagsService } from './tags.service.js';
 import { CreateTagDto } from './dto/create-tag.dto.js';
 import { UpdateTagDto } from './dto/update-tag.dto.js';
+import { TagQueryDto } from './dto/query.dto.js';
 
 @Controller('tags')
 export class TagsController {
@@ -13,8 +14,8 @@ export class TagsController {
   }
 
   @Get()
-  findAll() {
-    return this.tagsService.findAll();
+  findAll(@Query() tagQueryDto : TagQueryDto ) {
+    return this.tagsService.findAllByName(tagQueryDto);
   }
 
   @Get(':id')

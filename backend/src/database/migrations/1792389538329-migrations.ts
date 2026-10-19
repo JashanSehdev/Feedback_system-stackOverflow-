@@ -1,5 +1,4 @@
 import {
-  ForeignKey,
   MigrationInterface,
   QueryRunner,
   Table,

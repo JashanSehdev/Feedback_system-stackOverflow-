@@ -1,6 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn, type Relation } from "typeorm";
 import { FeedTag } from "../../feed_tag/entities/feed_tag.entity.js";
-import { Feedback } from "../../feedback/entities/feedback.entity.js";
 
 @Entity('tags')
 export class Tag {

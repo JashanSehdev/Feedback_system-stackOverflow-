@@ -1,0 +1,12 @@
+
+.button{
+    border-radius : 10px;
+    max-width: 300px !important;
+    width: 100%;
+}
+
+.container{
+    padding :1rem 2rem;
+    margin : auto;
+    background-color: rgba(0, 0, 0, 0.03);
+}

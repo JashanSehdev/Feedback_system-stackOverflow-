@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, type Relation } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, type Relation } from "typeorm";
 import { Feedback } from "../../feedback/entities/feedback.entity.js";
 import { Tag } from "../../tags/entities/tag.entity.js";
 
@@ -15,8 +15,10 @@ export class FeedTag {
     tagId : number
 
     @ManyToOne(() => Feedback, (feedback)=> feedback.tags)
+    @JoinColumn({ name: 'feedbackId' })
     feed: Relation<Feedback>
 
     @ManyToOne(() => Tag, (tag)=> tag.feedbacks)
+    @JoinColumn({ name: 'tagId' })
     tag: Relation<Tag>
 }

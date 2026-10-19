@@ -11,7 +11,6 @@ import {
   loginUserAsync,
 } from "@/features/auth/handle-auth/auth.action";
 import styles from "./login.module.css";
-import GoogleAuthButton from "@/components/auth/google-auth-button/google-auth";
 import Link from "next/link";
 
 const inputs: InputFields[] = [
@@ -45,8 +44,9 @@ export default function LoginPage() {
     try {
       setLoading(true);
       await dispatch(loginUserAsync(data)).unwrap();
-    } catch (Error) {
-      console.error(Error);
+      router.replace("/")
+    } catch (error) {
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -81,7 +81,7 @@ export default function LoginPage() {
             <Divider />
           </Stack>
         </form>
-        <GoogleAuthButton />
+
       </Stack>
     </Paper>
   );

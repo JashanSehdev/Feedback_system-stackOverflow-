@@ -7,8 +7,8 @@ import { useState } from "react";
 import { useAppDispatch } from "@/features/store";
 import { registerUserAsync } from "@/features/auth/handle-auth/auth.action";
 import styles from "./register.module.css";
-import GoogleAuthButton from "@/components/auth/google-auth-button/google-auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const inputs: InputFields[] = [
   {
@@ -40,6 +40,7 @@ const inputs: InputFields[] = [
 export default function Register() {
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
+  const router = useRouter()
 
   const {
     register,
@@ -56,8 +57,9 @@ export default function Register() {
       setLoading(true);
       const { confirmPassword, ...rest } = data;
       await dispatch(registerUserAsync(rest));
-    } catch (Error) {
-      console.error(Error);
+      router.replace("/")
+    } catch (error) {
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -90,7 +92,6 @@ export default function Register() {
             </Button>
           </Stack>
         </form>
-        <GoogleAuthButton />
       </Stack>
     </Paper>
   );

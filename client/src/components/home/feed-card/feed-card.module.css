@@ -1,0 +1,21 @@
+
+.icons {
+    font-size: 100px !important;
+}
+
+.container {
+    max-width: 800px;
+}
+
+.chips {
+    padding :0.1rem !important;
+    width: fit-content ;
+}
+
+.description {
+    display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+
+}

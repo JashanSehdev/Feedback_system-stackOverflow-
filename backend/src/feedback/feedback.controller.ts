@@ -1,15 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { FeedbackService } from './feedback.service.js';
 import { CreateFeedbackDto } from './dto/create-feedback.dto.js';
 import { UpdateFeedbackDto } from './dto/update-feedback.dto.js';
 
-@Controller('feedback')
+@Controller('feedbacks')
 export class FeedbackController {
   constructor(private readonly feedbackService: FeedbackService) {}
 
   @Post()
-  create(@Body() createFeedbackDto: CreateFeedbackDto) {
-    return this.feedbackService.create(createFeedbackDto);
+  create(@Body() createFeedbackDto: CreateFeedbackDto, @Req() req : Request & {user : any}) {
+    return this.feedbackService.create(createFeedbackDto, req.user.id);
   }
 
   @Get()

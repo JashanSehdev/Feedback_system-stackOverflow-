@@ -55,19 +55,6 @@ export const getMeAsync =  createAsyncThunk(
     }
 )
 
-export const googleAuthAsync =  createAsyncThunk(
-    'auth/google',
-    async(data : GoogleDispatch, thunkApi) => {
-        try {
-            const response = await api.post("/auth/google", data);
-            return response.data
-        } catch (error : any) {
-            return thunkApi.rejectWithValue(
-                error.response?.data || 'something went wrong'
-            )
-        }
-    }
-)
 
 export const logoutMeAsync =  createAsyncThunk(
     'auth/logout',
