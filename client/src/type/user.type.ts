@@ -7,3 +7,8 @@ export type User = {
     createAt : string;
     updatedAt : string;  
 }
+
+export type IntegratedUser = {
+    id : number,
+    username : string
+}

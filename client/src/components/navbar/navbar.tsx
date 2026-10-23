@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/features/store";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { enqueueSnackbar } from "notistack";
 
 export default function Navbar() {
   const user = useAppSelector((state) => state.auth.user);
@@ -11,11 +12,15 @@ export default function Navbar() {
   const router = useRouter();
   const handleLogout = async () => {
     try {
-      await dispatch(logoutMeAsync());
+      await dispatch(logoutMeAsync()).unwrap();
+      enqueueSnackbar('Logout successfull', { variant : 'success'})
 
       router.refresh();
     } catch (error) {
-      console.error(error);
+      enqueueSnackbar(
+        typeof error === 'string' ? error : 'Unable to logout, please try again',
+        {variant : 'error'}
+      )
     }
   };
   return (

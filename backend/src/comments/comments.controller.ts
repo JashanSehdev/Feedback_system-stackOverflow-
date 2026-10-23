@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, ParseIntPipe } from '@nestjs/common';
 import { CommentsService } from './comments.service.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
 import { UpdateCommentDto } from './dto/update-comment.dto.js';
@@ -8,8 +8,18 @@ export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Post()
-  create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentsService.create(createCommentDto);
+  create(@Body() createCommentDto: CreateCommentDto,  @Req() req : Request &  {user : any}) {
+    const result =  this.commentsService.create(createCommentDto, req.user.id);
+
+    return {...result, user: {
+      id: req.user.id,
+      username : req.user.username
+    }}
+  }
+
+  @Get('feedback/:id')
+  getPostComment(@Param('id', ParseIntPipe) id : number){
+    return this.commentsService.findAllfeedComments(id)
   }
 
   @Get()

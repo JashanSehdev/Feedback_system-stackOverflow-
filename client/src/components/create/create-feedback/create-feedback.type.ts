@@ -17,8 +17,8 @@ const tagSchema = z.object({
 })
 
 export const feedbackSchema = z.object({
-    title : z.string().min(1, 'title Required').max(100, 'title should be less than 100 words'),
-    description : z.string().min(1, 'title Required').max(500, 'title should be less than 500 words'),
+    title : z.string().min(1, 'Title Required').max(100, 'title should be less than 100 words'),
+    description : z.string().min(30, 'Description must be atleast 30 words').max(500, 'title should be less than 500 words'),
     status : z.enum(FeedStatus),
     tags : z.array(tagSchema)
 })

@@ -19,3 +19,8 @@ type Tags = {
     id : number,
     tag : Tag
 }
+
+export enum VoteEnum {
+    up = 'upVote',
+    down = 'downVote'
+}

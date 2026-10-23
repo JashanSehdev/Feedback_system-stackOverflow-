@@ -12,13 +12,14 @@ import {
 } from "@/features/auth/handle-auth/auth.action";
 import styles from "./login.module.css";
 import Link from "next/link";
+import { enqueueSnackbar } from "notistack";
 
 const inputs: InputFields[] = [
   {
-    name: "email",
-    type: "email",
-    label: "Enter Your email",
-    placeholder: "Enter Your Email",
+    name: "identifier",
+    type: "text",
+    label: "Enter Your email or username",
+    placeholder: "joe@gmail.com or joe_smith",
   },
   {
     name: "password",
@@ -44,9 +45,15 @@ export default function LoginPage() {
     try {
       setLoading(true);
       await dispatch(loginUserAsync(data)).unwrap();
+      enqueueSnackbar('Login Successfull', { variant : 'success'})
       router.replace("/")
     } catch (error) {
-      console.error(error);
+      enqueueSnackbar(
+      typeof error === "string"
+        ? error
+        : "Unable to log in. Please try again.",
+      { variant: "error" }
+    );
     } finally {
       setLoading(false);
     }

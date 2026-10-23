@@ -25,6 +25,16 @@ const authSlice = createSlice({
     .addCase(logoutMeAsync.fulfilled, (state) => {
       state.user = null
     }) 
+    .addCase(logoutMeAsync.rejected, (state) => {
+      state.user = null
+    }) 
+    .addCase(registerUserAsync.rejected, (state) => {
+      state.user = null
+    })
+    .addCase(loginUserAsync.rejected, (state) => {
+      state.user = null
+    }) 
+    
   }
 });
 

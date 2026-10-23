@@ -10,6 +10,7 @@ import { FeedbackModule } from './feedback/feedback.module.js';
 import { TagsModule } from './tags/tags.module.js';
 import { FeedTagModule } from './feed_tag/feed_tag.module.js';
 import { CommentsModule } from './comments/comments.module.js';
+import { VotesModule } from './vote/votes.module.js';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -55,6 +56,8 @@ import { CommentsModule } from './comments/comments.module.js';
     FeedTagModule,
 
     CommentsModule,
+
+    VotesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

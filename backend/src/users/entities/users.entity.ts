@@ -1,7 +1,8 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, type Relation } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, type Relation } from "typeorm";
 import { Role } from "../enum/roles.enum.js";
 import { Feedback } from "../../feedback/entities/feedback.entity.js";
 import { Comment } from "../../comments/entities/comment.entity.js";
+import { Vote, } from "../../vote/entities/votes.entity.js";
 
 @Entity('users')
 
@@ -33,6 +34,9 @@ export class User {
 
     @OneToMany(()=>Comment, (comment) => comment.user)
     comments : Relation<Comment[]>
+
+    @OneToMany(() => Vote, (vote) => vote.user)
+    votes : Relation<Vote[]>
 
 
 }

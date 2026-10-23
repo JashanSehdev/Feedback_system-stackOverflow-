@@ -65,6 +65,10 @@ export class UsersService {
     return await this.userRepository.findOneBy({ email });
   }
 
+   async findOneSensitiveByUsername(username: string): Promise<User | null> {
+    return await this.userRepository.findOneBy({ username });
+  }
+
   async findAll(id: number): Promise<DispatchUser[] | null> {
     return await this.userRepository.find();
   }

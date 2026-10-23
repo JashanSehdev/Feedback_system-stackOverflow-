@@ -1,15 +1,19 @@
-import { IsOptional, IsString } from "class-validator"
+import { IsOptional, IsString, Matches } from "class-validator"
 
 export class RegisterUserDto {
-    @IsOptional()
+
+
     @IsString()
+    @Matches(/^[a-zA-Z][a-zA-Z0-9_]*$/, { message : 'Username must start with a letter and contain only letters, numbers, and underscores'})
     username: string
 
-    @IsOptional()
+
     @IsString()
     email : string
 
-    @IsOptional()
+
     @IsString()
     password : string
+
+    
 }

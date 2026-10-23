@@ -11,6 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginUserDto } from './dto/login.dto.js';
 import { GoogleAuthDto } from './dto/google.dto.js';
 import { DispatchUser, IUser } from '../users/interfaces/user.interface.js';
+import { User } from '../users/entities/users.entity.js';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,12 @@ export class AuthService {
   ) {}
 
   async registerUser(registerUserDto: RegisterUserDto): Promise<string> {
-    const existingUser = await this.usersService.findOneByEmail(
+
+    let existingUser = await this.usersService.findOneSensitiveByUsername(registerUserDto.username)
+    
+    if (existingUser) throw new ConflictException({code : 'ALREADY_EXIST' , message : 'username already exist'})
+
+    existingUser = await this.usersService.findOneSensitiveByEmail(
       registerUserDto.email,
     );
 
@@ -48,9 +54,14 @@ export class AuthService {
   }
 
   async loginUser(loginUserDto: LoginUserDto): Promise<string> {
-    const user = await this.usersService.findOneSensitiveByEmail(
-      loginUserDto.email,
-    );
+    const {identifier} = loginUserDto
+    let user : User | null = null;
+    if (identifier.includes('@')){
+      user = await this.usersService.findOneSensitiveByEmail(identifier)
+    } else {
+      user = await this.usersService.findOneSensitiveByUsername(identifier)
+    }
+
     if (!user) {
       throw new NotFoundException({
         code: 'NOT_FOUND_EXCEPTION',

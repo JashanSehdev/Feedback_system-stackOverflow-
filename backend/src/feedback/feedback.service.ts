@@ -1,11 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateFeedbackDto } from './dto/create-feedback.dto.js';
 import { UpdateFeedbackDto } from './dto/update-feedback.dto.js';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Feedback } from './entities/feedback.entity.js';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { FeedTagService } from '../feed_tag/feed_tag.service.js';
 import { FeedStatus } from './enum/feedback.enum.js';
+import { VotesService } from '../vote/votes.service.js';
+import { AppDataSource } from '../database/typeorm.config.js';
+import { CreateVoteDto } from '../vote/dto/create.vote.dto.js';
+import { VoteEnum } from '../vote/enum/vote.enum.js';
 
 @Injectable()
 export class FeedbackService {
@@ -13,6 +17,7 @@ export class FeedbackService {
     @InjectRepository(Feedback)
     private readonly feedbackRepository: Repository<Feedback>,
     private readonly feedTagService: FeedTagService,
+    private readonly voteServices : VotesService
   ) {}
 
   async create(createFeedbackDto: CreateFeedbackDto, userId: number) {
@@ -91,4 +96,6 @@ export class FeedbackService {
   remove(id: number) {
     return `This action removes a #${id} feedback`;
   }
+
+
 }

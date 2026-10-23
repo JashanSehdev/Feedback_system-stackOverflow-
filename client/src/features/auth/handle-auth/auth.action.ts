@@ -1,10 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { redirect } from "next/navigation";
-import { api } from "@/api/api";
+import { api, getErrorMessage } from "@/api/api";
 import { LoginInput } from "@/app/login/login.type";
 import { RegisterInput } from "@/app/register/register.type";
 import { User } from "@/type/user.type";
-import { GoogleDispatch } from "./auth.type";
 
 type Register = Omit<RegisterInput, 'confirmPassword'>
 
@@ -15,10 +13,8 @@ export const registerUserAsync = createAsyncThunk<User, Register>(
             await api.post("/auth/register", user)
             const result = await thunkApi.dispatch(getMeAsync()).unwrap()
             return result
-        } catch (error: any) {
-            return thunkApi.rejectWithValue(
-                error?.response?.data || 'something went wrong'
-            )
+        } catch (error: unknown) {
+            return thunkApi.rejectWithValue(getErrorMessage(error))
         }
     }
 )   
@@ -32,10 +28,8 @@ export const loginUserAsync =  createAsyncThunk<User, LoginInput>(
             const result = await thunkApi.dispatch(getMeAsync()).unwrap()
             return result 
 
-        } catch(error : any) {
-            return thunkApi.rejectWithValue(
-                error?.response?.data || 'something went wrong'
-            )
+        } catch(error : unknown) {
+            return thunkApi.rejectWithValue(getErrorMessage(error))
         }
     }
 )
@@ -47,10 +41,8 @@ export const getMeAsync =  createAsyncThunk(
             const response = await api.get("/auth/me");
             return response.data;
 
-        } catch(error : any) {
-            return thunkApi.rejectWithValue(
-                error?.response?.data || 'something went wrong'
-            )
+        } catch(error : unknown) {
+             return thunkApi.rejectWithValue(getErrorMessage(error))
         }
     }
 )
@@ -61,11 +53,8 @@ export const logoutMeAsync =  createAsyncThunk(
     async (_, thunkApi) => {
           try {
             await api.get("/auth/logout")
-            redirect("/")
-        } catch(error : any) {
-            thunkApi.rejectWithValue(
-                error?.response?.data || 'something went wrong'
-            )
+        } catch(error : unknown) {
+             return thunkApi.rejectWithValue(getErrorMessage(error))
         }
     }
 )

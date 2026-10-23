@@ -9,6 +9,7 @@ import { registerUserAsync } from "@/features/auth/handle-auth/auth.action";
 import styles from "./register.module.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { enqueueSnackbar } from "notistack";
 
 const inputs: InputFields[] = [
   {
@@ -19,7 +20,7 @@ const inputs: InputFields[] = [
   },
   {
     name: "email",
-    type: "email",
+    type: "text",
     placeholder: "eg: john.doe@gmail.com",
     label: "Enter Your Email",
   },
@@ -56,10 +57,14 @@ export default function Register() {
     try {
       setLoading(true);
       const { confirmPassword, ...rest } = data;
-      await dispatch(registerUserAsync(rest));
+      await dispatch(registerUserAsync(rest)).unwrap();
+      enqueueSnackbar('registration successfull', { variant : 'success'})
       router.replace("/")
     } catch (error) {
-      console.error(error);
+      enqueueSnackbar(
+        typeof error === 'string' ? error : 'Unable to register, please try again',
+        {variant : 'error'}
+      )
     } finally {
       setLoading(false);
     }

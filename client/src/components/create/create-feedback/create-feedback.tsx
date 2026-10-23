@@ -38,7 +38,7 @@ export default function CreateFeedback() {
   } = useForm<FeedbackInputs>({
     resolver: zodResolver(feedbackSchema),
     defaultValues: {
-      status: FeedStatus.PRIVATE,
+      status: FeedStatus.PUBLIC,
       tags: [],
     },
   });

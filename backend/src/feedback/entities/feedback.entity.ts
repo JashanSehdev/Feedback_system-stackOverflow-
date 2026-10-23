@@ -3,6 +3,7 @@ import { FeedStatus } from "../enum/feedback.enum.js";
 import { User } from "../../users/entities/users.entity.js";
 import { FeedTag } from "../../feed_tag/entities/feed_tag.entity.js";
 import { Comment } from "../../comments/entities/comment.entity.js";
+import { Vote } from "../../vote/entities/votes.entity.js";
 
 @Entity('feedbacks')
 export class Feedback {
@@ -42,5 +43,8 @@ export class Feedback {
 
     @OneToMany(() => Comment, (comment) => comment.feedback)
     comments : Relation<Comment>
+
+    @OneToMany(() => Vote, (vote) => vote.feedback)
+    votes : Relation<Vote>
 
 }
